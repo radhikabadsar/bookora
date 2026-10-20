@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import type { Book } from './types'
 
 /**
- * Practical 8: Typed Props Interface
+ * Typed Props Interface for BookSpotlight
  * Defines the strongly typed properties accepted by the functional component.
  */
 interface BookSpotlightProps {
@@ -11,9 +11,9 @@ interface BookSpotlightProps {
 }
 
 /**
- * Practical 8: React Functional Component with Typed Props and useState
+ * BookSpotlight: React Functional Component with Typed Props and useState
  * 
- * Student Viva Key Points:
+ * Architecture Highlights:
  * 1. Interface: 'Book' and 'BookSpotlightProps' define compile-time type safety.
  * 2. Functional Component: Pure function returning typed JSX.
  * 3. Props: Read-only inputs passed from parent to child.
@@ -201,7 +201,7 @@ export const BookSpotlight: React.FC<BookSpotlightProps> = ({
           lineHeight: 1.5,
         }}
       >
-        <strong>Student Viva Note:</strong> This component fulfills Practical 8 requirements. It is a React functional component written in TypeScript, enforces a typed <code>Book</code> interface, receives typed props, and dynamically re-renders UI state using <code>useState</code>.
+        <strong>Component Architecture Note:</strong> This is a standalone React functional component written in TypeScript. It enforces a typed <code>Book</code> interface, receives strongly typed props, and dynamically re-renders reactive UI state using <code>useState</code>.
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 /**
- * Practical 8: TypeScript Interface
+ * Bookora Domain Model: TypeScript Interface
  * Defines the strict type contract for a Book object in Bookora.
  */
 

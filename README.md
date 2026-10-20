@@ -1,129 +1,127 @@
-# 📚 Bookora — Modern Online Bookstore (WT Lab Project)
+# 📚 Bookora — Modern Literary Bookstore Web Application
 
-> **Web Technology Laboratory Mini Project**  
-> Comprehensive implementation mapping to **Practicals 1 through 9** of the Web Technology curriculum.
-
-Bookora is a modern, responsive e-commerce bookstore web application designed with an editorial aesthetic inspired by authentic literary houses. The customer-facing application is built cleanly with **semantic HTML5, shared CSS3, and modern Vanilla JavaScript**, while strictly isolating a typed **React 19 + TypeScript component** to fulfill coursework requirements (Practical 8).
+Bookora is a modern, responsive e-commerce bookstore web application designed with an editorial aesthetic inspired by authentic literary publishing houses. The storefront is built using **semantic HTML5, modern CSS3 (Flexbox & responsive Grid), and modular Vanilla JavaScript**, paired with an isolated **React 19 + TypeScript component showcase** illustrating clean state management and type safety.
 
 ---
 
-## 🎯 Syllabus Mapping Matrix (Practicals 1–9)
+## ✨ Features
 
-| Practical | Syllabus Curriculum Topic | Technical Implementation in Bookora |
-| :--- | :--- | :--- |
-| **Practical 1** | Semantic HTML5 & Structure | Five interconnected pages (`index.html`, `books.html`, `cart.html`, `account.html`, `about.html`) structured with semantic HTML5 elements (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`, `<form>`). |
-| **Practical 2** | CSS Styling, Flexbox, Grid & Layouts | Shared external stylesheet (`css/style.css`) using CSS variables, warm editorial canvas (`#FAF7F2`), deep green accents (`#14532D`), Flexbox navigation, responsive CSS Grid book layouts (`repeat(auto-fill, minmax(250px, 1fr))`), and media queries. |
-| **Practical 3** | JavaScript Fundamentals & Control Flow | ES6 arrow functions, `const`/`let` lexical scoping, template literals, conditional operators, and formatting helpers across `js/data.js`, `js/cart.js`, and `js/books.js`. |
-| **Practical 4** | DOM Manipulation & Element Rendering | Dynamic generation of book cards (`booksGrid.innerHTML`), cart row elements with image thumbnails and controls, and non-blocking toast notifications. |
-| **Practical 5** | JavaScript Events & Client-Side Validation | Real-time `input` live search, category `click` event listeners, tab switching, and complete form validation (`submit`, `e.preventDefault()`, email regex, password strength, and field error highlights in `js/account.js`). |
-| **Practical 6** | Arrays, Objects, `map()`, `filter()`, `reduce()` | &bull; Books catalog structured as an array of objects in `js/data.js`<br>&bull; `Array.prototype.filter()` used for instant search and category filtering in `js/books.js`<br>&bull; `Array.prototype.map()` used to transform book objects into HTML cards and cart rows<br>&bull; `Array.prototype.reduce()` used in `js/cart.js` to compute total items count, subtotal, sales tax, and grand total. |
-| **Practical 7** | Fetch API, Promises & `async/await` | Live public REST API integration with Open Library (`https://openlibrary.org/subjects/classic_literature.json?limit=4`) in `js/books.js`, featuring loading spinners, HTTP status verification, and `try/catch` error messaging with a retry button. |
-| **Practical 8** | React Functional Components, TypeScript, Props & `useState` | Isolated React 19 + TypeScript component in `src/react-demo/BookSpotlight.tsx` featuring a typed `Book` interface (`types.ts`), typed props (`BookSpotlightProps`), and reactive state management via `useState` (quantity counter, stock toggle, wishlist). Mounted via `react-demo.html`. |
-| **Practical 9** | Git & GitHub Version Control | Initialized local Git repository (`git init`), comprehensive `.gitignore`, clean multi-page build configuration, and commit-ready code organization. |
+- **Editorial Visual Aesthetics:** Warm paper canvas (`#FAF7F2`), deep evergreen accents (`#14532D`), bespoke typography, subtle micro-interactions, and responsive layout across mobile, tablet, and desktop devices.
+- **Dynamic Catalogue & Filtering:**
+  - Real-time search across titles and authors.
+  - Category filtering (Fiction, Classic Literature, Non-Fiction, Sci-Fi & Dystopian, Self-Help).
+  - Format-specific price tracking (Paperback, Hardcover, E-Book).
+- **Public REST API Discovery:**
+  - Live integration with the [Open Library Subjects API](https://openlibrary.org/developers/api) to dynamically discover classic literature.
+  - Interactive loading spinner, resilient error handling, and manual retry controls.
+- **Shopping Cart & Checkout Flow:**
+  - Multi-item cart management with quantity controls and real-time subtotal, tax, and grand total calculations.
+  - Delivery address form with Indian PIN code auto-fill (Delhi, Mumbai, Bengaluru, Kolkata, Chennai, Hyderabad, Ahmedabad, Pune).
+  - Format-aware physical/digital shipping validation.
+  - Client-side payment method simulation (Cash on Delivery, UPI, Net Banking) with instant order confirmation.
+- **Account & Profile Management:**
+  - Client-side authentication (Sign Up / Sign In) with form validation: email format, password complexity rules, and confirm-password verification.
+  - Profile customization (contact information, default shipping address) and persistent order history tracking.
+- **Interactive React 19 + TypeScript Showcase:**
+  - A standalone, strongly typed component (`BookSpotlight`) demonstrating a typed `Book` interface, functional component props, and interactive local state via `useState`.
+  - Accessible via [`react-demo.html`](react-demo.html).
 
 ---
 
-## 📁 Project Directory Structure
+## 🛠️ Technology Stack
+
+| Domain | Technologies Used |
+| :--- | :--- |
+| **Markup & Semantics** | Semantic HTML5 (`<header>`, `<nav>`, `<main>`, `<article>`, `<section>`, `<aside>`, `<footer>`, `<form>`) |
+| **Styling & Layout** | Vanilla CSS3, CSS Custom Properties (Variables), Flexbox, Responsive CSS Grid (`repeat(auto-fill, minmax(250px, 1fr))`), Media Queries |
+| **Client-Side Logic** | Vanilla JavaScript (ES6+ Modules, Array methods `filter`/`map`/`reduce`, Fetch API, `localStorage` persistence) |
+| **Component Layer** | React 19, TypeScript, Strict Props & Domain Typing |
+| **Build & Tooling** | Vite 8 (Multi-Page Application rollup), TypeScript Compiler (`tsc`), Oxlint |
+
+---
+
+## 📁 Directory Structure
 
 ```
 Bookora/
-├── index.html               # Page 1: Home (Hero banner, search shortcut, bestsellers, new releases)
-├── books.html               # Page 2: Catalogue (Search input, category pills, dynamic cards, Open Library discovery)
-├── cart.html                # Page 3: Cart (Item table with covers, +/- quantity controls, reduce() totals)
-├── account.html             # Page 4: My Account (Sign In, Create Account, mobile & address profile, order history)
-├── about.html               # Page 5: About (Independent bookstore story, values, and contact form)
-├── book-details.html        # Book Details (Format switcher: E-book, Paperback, Hardcover, sample reviews)
-├── checkout.html            # Checkout Flow (Address, Payment methods, Review Order, Order Confirmation)
-├── react-demo.html          # Practical 8 Isolated Component Demo (Viva examination page)
+├── index.html               # Storefront Home (Hero banner, search shortcut, curated collections)
+├── books.html               # Catalog (Live search, category pills, dynamic cards, Open Library discovery)
+├── book-details.html        # Book Detail Page (Edition selector, synopsis, customer reviews)
+├── cart.html                # Shopping Cart (Item table, quantity controls, reduce-driven price summary)
+├── checkout.html            # Checkout Flow (Shipping address, payment selection, order confirmation)
+├── account.html             # Customer Account (Sign In, Registration, Address Book, Order History)
+├── about.html               # About Bookora (Editorial philosophy, values, newsletter, contact form)
+├── react-demo.html          # Interactive React 19 + TypeScript Component Showcase
 ├── css/
-│   └── style.css            # Shared editorial stylesheet (warm paper canvas, deep green accents)
+│   └── style.css            # Shared design system (warm editorial canvas, typography, components)
 ├── js/
-│   ├── data.js              # Real book objects dataset with format prices & sample reviews
-│   ├── cart.js              # Cart state management (localStorage, format specificity, reduce() totals)
-│   ├── main.js              # Global active link indicator & cart counter badge utilities
-│   ├── books.js             # Catalogue rendering (filter, map) & Practical 7 Open Library discovery
-│   ├── account.js           # Account authentication, Indian mobile & PIN validation, order history
-│   └── checkout.js          # Multi-step checkout, physical/digital validation, simulated payments
+│   ├── data.js              # Curated books dataset, edition formats, and sample reviews
+│   ├── cart.js              # Cart state management (localStorage, item quantities, total calculation)
+│   ├── main.js              # Header state, navigation indicator, and cart count badges
+│   ├── books.js             # Catalog rendering, live filtering, and Open Library REST API integration
+│   ├── account.js           # Client-side authentication, form validation, and profile management
+│   └── checkout.js          # Multi-step checkout validation, address lookup, and simulated payment
 ├── src/
 │   └── react-demo/
-│       ├── types.ts         # Practical 8 TypeScript 'Book' interface
-│       ├── BookSpotlight.tsx# Practical 8 React functional component with typed props & useState
+│       ├── types.ts         # TypeScript domain interface ('Book')
+│       ├── BookSpotlight.tsx# React functional component with typed props & useState
 │       └── main.tsx         # React bootstrap mounting into react-demo.html
-├── vite.config.ts           # Multi-page application (MPA) build configuration
+├── vite.config.ts           # Multi-page application (MPA) Vite configuration
 ├── tsconfig.json            # Base TypeScript configuration
-├── tsconfig.app.json        # Client application TypeScript rules
 ├── package.json             # Project dependencies and npm scripts
-├── .gitignore               # Ignored files (node_modules, dist, logs)
-└── README.md                # Project documentation and practical mappings
+├── .gitignore               # Ignored build artifacts, dependencies, and local configs
+└── README.md                # Project documentation
 ```
 
 ---
 
-## 🚀 How to Run the Project Locally
+## 🚀 Getting Started
 
-### 1. Install Dependencies
+### Prerequisites
+- Node.js (version 18+ recommended)
+- npm or equivalent package manager
+
+### 1. Clone & Install
 ```bash
+git clone https://github.com/radhikabadsar/bookora.git
+cd bookora
 npm install
 ```
 
-### 2. Start the Development Server
+### 2. Run the Development Server
 ```bash
 npm run dev
 ```
-Open **`http://localhost:5173/`** in your browser.
-Navigate through the five pages:
+Open **`http://localhost:5173/`** in your browser to explore the storefront.
+
+Key page entry points:
 - **Home:** `http://localhost:5173/index.html` (or `/`)
 - **Catalogue:** `http://localhost:5173/books.html`
+- **Book Details:** `http://localhost:5173/book-details.html?id=1`
 - **Shopping Cart:** `http://localhost:5173/cart.html`
-- **My Account:** `http://localhost:5173/account.html`
-- **About Us:** `http://localhost:5173/about.html`
-- **Practical 8 React Component Demo:** `http://localhost:5173/react-demo.html`
+- **Checkout:** `http://localhost:5173/checkout.html`
+- **Account:** `http://localhost:5173/account.html`
+- **About:** `http://localhost:5173/about.html`
+- **React Showcase:** `http://localhost:5173/react-demo.html`
 
-### 3. Build & Verify TypeScript Compilation
+### 3. Build & Verify
 ```bash
 npm run build
 ```
-Compiles and bundles all six HTML pages, CSS, and the React + TypeScript asset bundle with zero errors.
+Executes TypeScript type-checking across all `.ts` and `.tsx` sources and generates the optimized production bundle in `dist/`.
 
 ---
 
-## 🎓 Student Viva Quick Reference
+## 🔒 Architecture & Demonstration Considerations
 
-1. **How is the book search and filtering executed? (Practical 6)**
-   In `js/books.js`, `renderBooks()` chains `Array.prototype.filter()`:
-   ```javascript
-   const filtered = window.initialBooks.filter((book) => {
-     const matchesCategory = activeCategory === "All" || book.category === activeCategory;
-     const q = searchKeyword.toLowerCase().trim();
-     const matchesSearch = q === "" || book.title.toLowerCase().includes(q) || book.author.toLowerCase().includes(q);
-     return matchesCategory && matchesSearch;
-   });
-   ```
+Bookora is designed as an interactive, client-side web application demonstration. Please note the following architectural considerations:
 
-2. **How are cart totals computed? (Practical 6)**
-   In `js/cart.js`, `getCartTotals()` uses `Array.prototype.reduce()`:
-   ```javascript
-   const totalItems = cart.reduce((accum, item) => accum + item.quantity, 0);
-   const subtotal = cart.reduce((accum, item) => accum + item.price * item.quantity, 0);
-   ```
-
-3. **How does the external API work? (Practical 7)**
-   In `js/books.js`, `fetchOpenLibraryBooks()` uses `async`/`await` with `fetch()` to call Open Library's public REST API, updating `#discoveryStatus` with a spinner during loading and presenting error notices if network access is offline.
-
-4. **How does Practical 8 satisfy React + TypeScript?**
-   In `src/react-demo/`:
-   - `types.ts` defines `export interface Book { id: number; title: string; price: number; inStock: boolean; ... }`
-   - `BookSpotlight.tsx` is a functional component taking `BookSpotlightProps` and managing state via `useState` (`const [quantity, setQuantity] = useState(1)` and `const [book, setBook] = useState(initialBook)`).
+1. **Client-Side Persistence:** User accounts, shopping carts, delivery addresses, and simulated orders are stored locally in browser `localStorage`. Data persists across tab refreshes within the same browser session, but does not synchronize across different browsers or private browsing windows.
+2. **Simulated Payments:** All payment options (Cash on Delivery, UPI, Net Banking) are simulated demonstrations. No real financial credentials are collected, and no banking transactions occur.
+3. **No External Authentication Backend:** Sign-up, sign-in, and session states are managed on the client for demonstration purposes. In a commercial production environment, these features should be backed by a secure authentication API with HTTPS, server-side cryptographic hashing, and HTTP-only session cookies.
 
 ---
 
-## 🔒 Client-Side Storage Architecture & Limitations (Coursework Notice)
+## 📄 License
 
-For the purpose of academic Web Technology lab coursework and viva examinations, user accounts, profiles, delivery addresses, mobile numbers, shopping carts, newsletter subscriptions, and order histories are persisted exclusively using **browser Web Storage (`localStorage`)**.
-
-### Important Security & Architectural Limitations:
-1. **No Backend Authentication Server:** Bookora does not use a server-side authentication service (e.g., Node.js, Express, OAuth, Firebase, or JWT). Registration and sign-in logic are simulated on the client side using pure JavaScript.
-2. **Plaintext Local Storage:** Data stored in `localStorage` is stored as unencrypted JSON strings. It is accessible to scripts within the same origin and is susceptible to local machine inspection and XSS (Cross-Site Scripting). Real production applications require HTTPS, salted cryptographic hashing (e.g. bcrypt or Argon2) on a protected backend, and secure HTTP-only cookies.
-3. **Browser Isolation:** User accounts and cart items exist solely inside the specific browser profile where they were created. They do not synchronize across devices, browsers, or private browsing (incognito) sessions.
-4. **Demonstration Payments:** All checkout payments (Cash on Delivery, UPI, Net Banking) are purely simulated for viva demonstration. Bookora never collects real banking credentials, transmits payment gateway payloads, or debits monetary balances.
-
+This project is open source and available under the [MIT License](LICENSE).

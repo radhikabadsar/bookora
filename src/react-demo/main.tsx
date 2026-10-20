@@ -19,5 +19,5 @@ const sampleBook: Book = {
 const container = document.getElementById('react-demo-root')
 if (container) {
   const root = createRoot(container)
-  root.render(<BookSpotlight initialBook={sampleBook} badgeTitle="Practical 8 Live React + TS Component" />)
+  root.render(<BookSpotlight initialBook={sampleBook} badgeTitle="Interactive React + TypeScript Showcase" />)
 }

@@ -1,6 +1,6 @@
 /**
  * Bookora - Shared Global JavaScript
- * Demonstrates: Practical 4 (DOM Manipulation) & Practical 5 (Events)
+ * Handles active header navigation and cart counter badge updates
  */
 
 document.addEventListener("DOMContentLoaded", () => {
