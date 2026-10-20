@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart — Bookora</title>
+    <meta name="description" content="Review your selected book editions and proceed to checkout." />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Top Announcement Bar -->
+    <div class="top-announcement">
+      Free Worldwide Delivery on Orders Over $50 &bull; Handpicked Hardcover Editions Delivered with Care
+    </div>
+
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="index.html" class="brand-logo">
+          <div class="brand-icon">📖</div>
+          <div class="brand-text-group">
+            <span class="brand-name">BOOKORA</span>
+            <span class="brand-subline">Modern Bookstore</span>
+          </div>
+        </a>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="books.html" class="nav-link">Books</a></li>
+            <li><a href="cart.html" class="nav-link active">Cart</a></li>
+            <li><a href="account.html" class="nav-link">Account</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="cart.html" class="cart-button-link" title="View Shopping Cart">
+            <span>🛒 Cart</span>
+            <span id="cartBadge" class="cart-counter" style="display: none;">0</span>
+          </a>
+          <a href="account.html" class="account-button-link" title="My Account">
+            <span>👤 Account</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Breadcrumb Navigation -->
+      <div class="breadcrumb-nav">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">Shopping Cart</span>
+      </div>
+
+      <!-- Page Header -->
+      <div class="editorial-header">
+        <div class="editorial-tagline">ORDER REVIEW</div>
+        <h1 class="editorial-title">Your Shopping Cart</h1>
+        <p class="editorial-desc">
+          Review your selected editions, manage quantities, and proceed to checkout.
+        </p>
+      </div>
+
+      <!-- Empty Cart State -->
+      <div id="emptyCartView" class="empty-cart-state" style="display: none;">
+        <div class="empty-cart-icon">🛒</div>
+        <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: var(--text-primary); margin-bottom: 0.5rem;">
+          Your Cart is Empty
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.75rem;">
+          Explore our curated shelves and discover books worth reading and remembering.
+        </p>
+        <a href="books.html" class="btn btn-forest">Explore Books ➔</a>
+      </div>
+
+      <!-- Populated Cart View -->
+      <div id="cartView" class="cart-grid-layout" style="display: none;">
+        <!-- Left Column: Items List -->
+        <div class="cart-items-panel">
+          <div class="cart-panel-header">
+            <h2>Selected Books (<span id="cartPanelCount">0</span>)</h2>
+            <button id="clearCartBtn" class="btn btn-outline btn-sm" style="color: var(--text-muted); font-size: 0.78rem;">
+              Clear All Items
+            </button>
+          </div>
+
+          <div id="cartItemsContainer">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Right Column: Order Summary -->
+        <aside class="order-summary-card">
+          <h3>Order Summary</h3>
+
+          <div class="summary-row">
+            <span>Items Count:</span>
+            <span id="summaryItemsCount" style="font-weight: 600; color: var(--text-primary);">0</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span id="summarySubtotal" style="font-weight: 600; color: var(--text-primary);">$0.00</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Standard Shipping:</span>
+            <span id="summaryShipping" style="font-weight: 600; color: var(--accent-green);">Free</span>
+          </div>
+
+          <div class="summary-row" id="summaryDiscountRow" style="display: none; color: #166534;">
+            <span>Coupon Discount (<span id="discountPercentText">15%</span>):</span>
+            <span id="summaryDiscount" style="font-weight: 600;">-$0.00</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Estimated Sales Tax:</span>
+            <span id="summaryTax" style="font-weight: 600; color: var(--text-primary);">$0.00</span>
+          </div>
+
+          <div class="summary-row total-row">
+            <span>Estimated Total:</span>
+            <span id="summaryGrandTotal" style="color: var(--accent-green);">$0.00</span>
+          </div>
+
+          <!-- Promo Code Box -->
+          <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
+            <div style="display: flex; gap: 0.5rem;">
+              <input
+                type="text"
+                id="cartCouponInput"
+                class="form-control"
+                placeholder="Promo code (e.g. WELCOME15)"
+                style="font-size: 0.82rem; text-transform: uppercase;"
+              />
+              <button id="applyCouponBtn" class="btn btn-outline btn-sm" type="button">Apply</button>
+            </div>
+            <div id="couponNotice" style="font-size: 0.75rem; margin-top: 0.35rem; display: none;"></div>
+          </div>
+
+          <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem;">
+            <button id="checkoutBtn" class="btn btn-forest" style="width: 100%;">
+              Proceed to Checkout ➔
+            </button>
+            <a href="books.html" class="btn btn-outline" style="width: 100%; text-align: center;">
+              ← Continue Shopping
+            </a>
+          </div>
+
+          <div style="margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;">
+            🔒 <strong>Guaranteed Quality:</strong> 30-day hassle-free returns on all hardcover editions. Orders over $50 include complimentary express delivery.
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.4rem;">📖</span>
+              <span style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #ffffff;">BOOKORA</span>
+            </div>
+            <p>
+              Bookora is an independent online bookstore committed to literary excellence. We curate handpicked hardcover editions, thought-provoking non-fiction, and timeless stories.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">Collections</h4>
+            <ul class="footer-links-list">
+              <li><a href="books.html">Best Sellers</a></li>
+              <li><a href="books.html">New Releases</a></li>
+              <li><a href="books.html">Hardcover Editions</a></li>
+              <li><a href="books.html">Classics &amp; Fiction</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">About Bookora</h4>
+            <ul class="footer-links-list">
+              <li><a href="about.html">Our Story</a></li>
+              <li><a href="about.html">Curatorial Vision</a></li>
+              <li><a href="about.html">Location &amp; Hours</a></li>
+              <li><a href="about.html">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">Customer Care</h4>
+            <ul class="footer-links-list">
+              <li><a href="cart.html">View Cart</a></li>
+              <li><a href="account.html">My Account</a></li>
+              <li><a href="about.html">Shipping &amp; Delivery</a></li>
+              <li><a href="about.html">Returns Policy</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <p>&copy; 2026 BOOKORA Bookstore Inc. All rights reserved.</p>
+          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+            <a href="about.html">Privacy Policy</a>
+            <a href="about.html">Terms of Service</a>
+            <a href="react-demo.html" style="opacity: 0.4;">Component Demo</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="js/data.js"></script>
+    <script type="module" src="js/cart.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module">
+      document.addEventListener("DOMContentLoaded", () => {
+        const emptyCartView = document.getElementById("emptyCartView");
+        const cartView = document.getElementById("cartView");
+        const cartItemsContainer = document.getElementById("cartItemsContainer");
+        const cartPanelCount = document.getElementById("cartPanelCount");
+        const clearCartBtn = document.getElementById("clearCartBtn");
+        const checkoutBtn = document.getElementById("checkoutBtn");
+
+        const summaryItemsCount = document.getElementById("summaryItemsCount");
+        const summarySubtotal = document.getElementById("summarySubtotal");
+        const summaryShipping = document.getElementById("summaryShipping");
+        const summaryTax = document.getElementById("summaryTax");
+        const summaryGrandTotal = document.getElementById("summaryGrandTotal");
+
+        function renderCartPage() {
+          const cart = getCart();
+
+          if (cart.length === 0) {
+            emptyCartView.style.display = "block";
+            cartView.style.display = "none";
+            return;
+          }
+
+          emptyCartView.style.display = "none";
+          cartView.style.display = "grid";
+
+          if (cartPanelCount) cartPanelCount.textContent = cart.length;
+
+          // Render cart rows
+          cartItemsContainer.innerHTML = cart
+            .map((item) => {
+              const cleanTitle = window.formatHumanReadableTitle ? window.formatHumanReadableTitle(item.title) : (item.title || "Book Edition");
+              const cleanAuthor = window.formatHumanReadableAuthor ? window.formatHumanReadableAuthor(item.author) : (item.author || "Bookora Press");
+              const fallback = window.getFallbackCover(cleanTitle, cleanAuthor, item.accentColor);
+              const itemTotal = ((item.price || 0) * (item.quantity || 1)).toFixed(2);
+              const safeTitleAttr = cleanTitle.replace(/"/g, "&quot;");
+              const coverSrc = item.coverUrl || fallback;
+
+              return `
+                <div class="cart-item-row" data-id="${item.id}">
+                  <div class="cart-item-cover">
+                    <img
+                      src="${coverSrc}"
+                      alt="${safeTitleAttr}"
+                      loading="lazy"
+                      onerror="this.onerror=null; this.src='${fallback}';"
+                    />
+                  </div>
+                  <div class="cart-item-info">
+                    <h4>${cleanTitle}</h4>
+                    <p class="cart-item-author">by ${cleanAuthor}</p>
+                    <span class="cart-item-format">${item.format || "Hardcover"}</span>
+                    <div style="font-size: 0.85rem; color: var(--text-primary); font-weight: 600; margin-top: 0.35rem;">
+                      $${(item.price || 0).toFixed(2)} each
+                    </div>
+                  </div>
+                  <div class="qty-control-box">
+                    <button class="qty-btn" onclick="handleQtyChange('${item.id}', -1)" title="Decrease quantity">-</button>
+                    <span class="qty-number">${item.quantity}</span>
+                    <button class="qty-btn" onclick="handleQtyChange('${item.id}', 1)" title="Increase quantity">+</button>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 1rem;">
+                    <div class="cart-item-subtotal">$${itemTotal}</div>
+                    <button class="remove-item-btn" onclick="handleRemove('${item.id}')" title="Remove item">✕</button>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+
+          // Update summary using reduce()
+          const totals = getCartTotals();
+          summaryItemsCount.textContent = totals.totalItems;
+          summarySubtotal.textContent = `$${totals.subtotal.toFixed(2)}`;
+          summaryShipping.textContent = totals.shipping === 0 ? "Free ($50+ order)" : `$${totals.shipping.toFixed(2)}`;
+          summaryTax.textContent = `$${totals.estimatedTax.toFixed(2)}`;
+          summaryGrandTotal.textContent = `$${totals.grandTotal.toFixed(2)}`;
+
+          const summaryDiscountRow = document.getElementById("summaryDiscountRow");
+          const summaryDiscount = document.getElementById("summaryDiscount");
+          const discountPercentText = document.getElementById("discountPercentText");
+          if (summaryDiscountRow && summaryDiscount) {
+            if (totals.discount > 0) {
+              summaryDiscountRow.style.display = "flex";
+              if (discountPercentText) {
+                discountPercentText.textContent = `${Math.round(totals.discountRate * 100)}%`;
+              }
+              summaryDiscount.textContent = `-$${totals.discount.toFixed(2)}`;
+            } else {
+              summaryDiscountRow.style.display = "none";
+            }
+          }
+        }
+
+        window.handleQtyChange = (id, delta) => {
+          updateQuantity(id, delta);
+          renderCartPage();
+        };
+
+        window.handleRemove = (id) => {
+          removeFromCart(id);
+          renderCartPage();
+        };
+
+        const applyCouponBtn = document.getElementById("applyCouponBtn");
+        const cartCouponInput = document.getElementById("cartCouponInput");
+        const couponNotice = document.getElementById("couponNotice");
+
+        if (applyCouponBtn && cartCouponInput) {
+          const existingCoupon = getAppliedCoupon();
+          if (existingCoupon) {
+            cartCouponInput.value = existingCoupon;
+          }
+
+          applyCouponBtn.addEventListener("click", () => {
+            const rawCode = cartCouponInput.value.trim().toUpperCase();
+            if (!rawCode) {
+              setAppliedCoupon(null);
+              if (couponNotice) {
+                couponNotice.textContent = "Coupon removed.";
+                couponNotice.style.color = "var(--text-muted)";
+                couponNotice.style.display = "block";
+              }
+              renderCartPage();
+              return;
+            }
+
+            if (isValidCoupon(rawCode)) {
+              setAppliedCoupon(rawCode);
+              renderCartPage();
+              const totals = getCartTotals();
+              if (couponNotice) {
+                couponNotice.innerHTML = `✓ Coupon <strong>${rawCode}</strong> applied! You saved $${totals.discount.toFixed(2)}.`;
+                couponNotice.style.color = "var(--accent-green)";
+                couponNotice.style.display = "block";
+              }
+            } else {
+              // Invalid coupon: DO NOT show success message!
+              if (couponNotice) {
+                couponNotice.textContent = "Invalid coupon code. Try WELCOME15";
+                couponNotice.style.color = "var(--danger)";
+                couponNotice.style.display = "block";
+              }
+            }
+          });
+        }
+
+        if (clearCartBtn) {
+          clearCartBtn.addEventListener("click", () => {
+            if (confirm("Are you sure you want to remove all items from your cart?")) {
+              clearCart();
+              renderCartPage();
+            }
+          });
+        }
+
+        if (checkoutBtn) {
+          checkoutBtn.addEventListener("click", () => {
+            const totals = getCartTotals();
+            if (totals.totalItems === 0) return;
+            // Navigate to dedicated Checkout flow (Requirement 6)
+            window.location.href = "checkout.html";
+          });
+        }
+
+        renderCartPage();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout &amp; Order Review — Bookora</title>
+    <meta name="description" content="Complete your Bookora book order, provide delivery details, choose payment method, and confirm your purchase." />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Top Announcement Bar -->
+    <div class="top-announcement">
+      Free Worldwide Delivery on Orders Over $50 &bull; Handpicked Hardcover Editions Delivered with Care
+    </div>
+
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="index.html" class="brand-logo">
+          <div class="brand-icon">📖</div>
+          <div class="brand-text-group">
+            <span class="brand-name">BOOKORA</span>
+            <span class="brand-subline">Modern Bookstore</span>
+          </div>
+        </a>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="books.html" class="nav-link">Books</a></li>
+            <li><a href="cart.html" class="nav-link">Cart</a></li>
+            <li><a href="account.html" class="nav-link">Account</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="cart.html" class="cart-button-link" title="View Shopping Cart">
+            <span>🛒 Cart</span>
+            <span id="cartBadge" class="cart-counter" style="display: none;">0</span>
+          </a>
+          <a href="account.html" class="account-button-link" title="My Account">
+            <span>👤 Account</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Breadcrumb Navigation -->
+      <div class="breadcrumb-nav">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-separator">›</span>
+        <a href="cart.html">Shopping Cart</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">Checkout &amp; Dispatch</span>
+      </div>
+
+      <!-- Empty Cart Notice on Checkout -->
+      <div id="checkoutEmptyCart" class="empty-cart-state" style="display: none;">
+        <div class="empty-cart-icon">🛒</div>
+        <h2 style="font-family: var(--font-serif); font-size: 1.85rem; color: var(--text-primary); margin-bottom: 0.5rem;">
+          No Items to Checkout
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.75rem;">
+          Your shopping cart is currently empty. Please choose editions from our catalogue before checking out.
+        </p>
+        <a href="books.html" class="btn btn-forest">Explore Catalogue ➔</a>
+      </div>
+
+      <!-- Active Checkout Flow Section -->
+      <div id="checkoutActiveFlow">
+        <!-- Page Header -->
+        <div class="editorial-header">
+          <div class="editorial-tagline">ORDER DISPATCH &amp; SETTLEMENT</div>
+          <h1 class="editorial-title">Complete Your Order</h1>
+          <p class="editorial-desc">
+            Review delivery destination, select payment preference, and confirm your curated editions.
+          </p>
+        </div>
+
+        <!-- Checkout Steps Indicator -->
+        <div class="checkout-step-indicator">
+          <div class="checkout-step-pill active">
+            <span>1</span>
+            <span>Delivery &amp; Contact</span>
+          </div>
+          <span style="color: var(--border-color);">➔</span>
+          <div class="checkout-step-pill active">
+            <span>2</span>
+            <span>Payment Method</span>
+          </div>
+          <span style="color: var(--border-color);">➔</span>
+          <div class="checkout-step-pill active">
+            <span>3</span>
+            <span>Review &amp; Place Order</span>
+          </div>
+        </div>
+
+        <div class="checkout-grid-layout">
+          <!-- Left Column: Forms -->
+          <div>
+            <!-- Order Type Alert Banner -->
+            <div id="orderTypeBanner" class="notice-banner" style="display: block; margin-bottom: 1.5rem; background-color: #f8fafc; border-color: #cbd5e1; color: #334155;">
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- 1. Delivery Contact Details Form -->
+            <div class="checkout-card">
+              <h3>
+                <span>1. Contact &amp; Delivery Details</span>
+                <span id="profilePrefillBadge" style="font-size: 0.75rem; font-family: var(--font-sans); background: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 9999px; font-weight: 600; display: none;">
+                  Prefilled from Profile
+                </span>
+              </h3>
+
+              <div id="checkoutContactNotice" style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.5;">
+                ℹ️ You may edit delivery contact details for this specific order without changing your saved account profile.
+              </div>
+
+              <form id="checkoutDetailsForm" novalidate>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label for="checkoutName" class="form-label">Full Name *</label>
+                    <input type="text" id="checkoutName" class="form-control" placeholder="Recipient full name" required />
+                    <div id="checkoutNameError" class="field-error-text"></div>
+                  </div>
+
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label for="checkoutEmail" class="form-label">Email Address *</label>
+                    <input type="email" id="checkoutEmail" class="form-control" placeholder="reader@example.com" required />
+                    <div id="checkoutEmailError" class="field-error-text"></div>
+                  </div>
+                </div>
+
+                <!-- Physical delivery container: shown if order has physical books -->
+                <div id="physicalAddressFields">
+                  <div class="form-group">
+                    <label for="checkoutMobile" class="form-label">Mobile Number * (10 digits, India)</label>
+                    <input
+                      type="tel"
+                      id="checkoutMobile"
+                      class="form-control"
+                      placeholder="e.g. 9876543210"
+                      maxlength="10"
+                      inputmode="numeric"
+                      required
+                    />
+                    <div id="checkoutMobileError" class="field-error-text"></div>
+                    <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 4px;">
+                      Required for physical deliveries. Indian mobile number (exactly 10 digits, numbers only).
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="checkoutStreet" class="form-label">Street Address / House / Flat *</label>
+                    <input type="text" id="checkoutStreet" class="form-control" placeholder="e.g. 104 Heritage Heights, MG Road" required />
+                    <div id="checkoutStreetError" class="field-error-text"></div>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                      <label for="checkoutCity" class="form-label">City *</label>
+                      <input type="text" id="checkoutCity" class="form-control" placeholder="e.g. Pune" required />
+                      <div id="checkoutCityError" class="field-error-text"></div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                      <label for="checkoutState" class="form-label">State / UT *</label>
+                      <select id="checkoutState" class="form-control" required>
+                        <option value="" disabled selected>Select State / UT</option>
+                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                        <option value="Delhi (NCT)">Delhi (NCT)</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Ladakh">Ladakh</option>
+                        <option value="Lakshadweep">Lakshadweep</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Puducherry">Puducherry</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="West Bengal">West Bengal</option>
+                      </select>
+                      <div id="checkoutStateError" class="field-error-text"></div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 0;">
+                      <label for="checkoutPincode" class="form-label">PIN Code * (6 digits)</label>
+                      <input type="text" id="checkoutPincode" class="form-control" maxlength="6" placeholder="411001" required />
+                      <div id="checkoutPincodeError" class="field-error-text"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Digital-only delivery notice -->
+                <div id="digitalOnlyNotice" style="display: none; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 1rem 1.25rem; font-size: 0.85rem; color: #1e40af; line-height: 1.5;">
+                  📱 <strong>Digital Order:</strong> This order contains e-book editions only. A physical delivery address and mobile number are not required. Instant digital access receipts will be sent to your email.
+                </div>
+              </form>
+            </div>
+
+            <!-- 2. Payment Method Card -->
+            <div class="checkout-card">
+              <h3>
+                <span>2. Payment Preference</span>
+                <span style="font-size: 0.72rem; font-family: var(--font-sans); color: var(--accent-gold); font-weight: 600;">
+                  Demonstration Only
+                </span>
+              </h3>
+
+              <div style="background-color: #fef3c7; border: 1px solid #fde68a; border-radius: var(--radius-md); padding: 0.85rem 1rem; font-size: 0.8rem; color: #92400e; line-height: 1.5; margin-bottom: 1.25rem;">
+                🔒 <strong>Demonstration Notice:</strong> This checkout is for academic coursework demonstration. No real banking credentials are collected, no actual payment requests are generated, and no real financial charges occur.
+              </div>
+
+              <div class="payment-method-grid">
+                <!-- Method 1: Cash on Delivery -->
+                <label class="payment-method-card active" id="payMethodCodLabel">
+                  <input type="radio" name="paymentMethod" value="Cash on Delivery" checked onchange="handlePaymentChange('Cash on Delivery')" />
+                  <div class="payment-method-info">
+                    <div class="payment-method-title">
+                      <span>💵 Cash on Delivery (COD)</span>
+                      <span style="font-size: 0.72rem; background: #e2e8f0; color: #475569; padding: 2px 6px; border-radius: 4px;">Zero Advance Fee</span>
+                    </div>
+                    <div class="payment-method-desc">
+                      Pay with cash or digital UPI upon receiving your packaged physical books at your doorstep.
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Method 2: UPI -->
+                <label class="payment-method-card" id="payMethodUpiLabel">
+                  <input type="radio" name="paymentMethod" value="UPI" onchange="handlePaymentChange('UPI')" />
+                  <div class="payment-method-info">
+                    <div class="payment-method-title">
+                      <span>📱 UPI (Simulated Transfer)</span>
+                      <span style="font-size: 0.72rem; background: #e0e7ff; color: #3730a3; padding: 2px 6px; border-radius: 4px;">Google Pay / PhonePe / Paytm</span>
+                    </div>
+                    <div class="payment-method-desc">
+                      Simulated instant payment via UPI ID. (Coursework demonstration VPA: <code>reader@bookora-demo</code>).
+                    </div>
+                  </div>
+                </label>
+
+                <!-- Method 3: Net Banking -->
+                <label class="payment-method-card" id="payMethodNetBankingLabel">
+                  <input type="radio" name="paymentMethod" value="Net Banking" onchange="handlePaymentChange('Net Banking')" />
+                  <div class="payment-method-info">
+                    <div class="payment-method-title">
+                      <span>🏦 Net Banking (Simulated Portal)</span>
+                      <span style="font-size: 0.72rem; background: #f1f5f9; color: #334155; padding: 2px 6px; border-radius: 4px;">Major Indian Banks</span>
+                    </div>
+                    <div class="payment-method-desc">
+                      Select demo bank (State Bank of India, HDFC Bank, ICICI Bank, Axis Bank). No credentials collected.
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Review & Placement -->
+          <aside class="order-summary-card">
+            <h3>3. Review Order</h3>
+
+            <!-- Itemized List of Books in Cart -->
+            <div id="checkoutItemsList" style="max-height: 280px; overflow-y: auto; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; display: flex; flex-direction: column; gap: 0.75rem;">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Financial Totals -->
+            <div class="summary-row">
+              <span>Total Editions:</span>
+              <span id="checkoutTotalItems" style="font-weight: 600; color: var(--text-primary);">0</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span id="checkoutSubtotal" style="font-weight: 600; color: var(--text-primary);">$0.00</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Delivery / Shipping:</span>
+              <span id="checkoutShipping" style="font-weight: 600; color: var(--accent-green);">Free</span>
+            </div>
+
+            <div class="summary-row" id="checkoutDiscountRow" style="display: none; color: #166534;">
+              <span>Coupon Discount (<span id="checkoutDiscountPercent">15%</span>):</span>
+              <span id="checkoutDiscount" style="font-weight: 600;">-$0.00</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Estimated Sales Tax (5%):</span>
+              <span id="checkoutTax" style="font-weight: 600; color: var(--text-primary);">$0.00</span>
+            </div>
+
+            <div class="summary-row total-row">
+              <span>Final Total:</span>
+              <span id="checkoutGrandTotal" style="color: var(--accent-green);">$0.00</span>
+            </div>
+
+            <!-- Promo Code Input -->
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border-color);">
+              <div style="display: flex; gap: 0.5rem;">
+                <input
+                  type="text"
+                  id="checkoutCouponInput"
+                  class="form-control"
+                  placeholder="Coupon (e.g. WELCOME15)"
+                  style="font-size: 0.82rem; text-transform: uppercase;"
+                />
+                <button id="checkoutApplyCouponBtn" class="btn btn-outline btn-sm" type="button">Apply</button>
+              </div>
+              <div id="checkoutCouponNotice" style="font-size: 0.75rem; margin-top: 0.35rem; display: none;"></div>
+            </div>
+
+            <!-- Destination Review Snip -->
+            <div style="margin-top: 1.25rem; padding: 0.85rem; background: var(--bg-canvas); border: 1px solid var(--border-color); border-radius: var(--radius-sm); font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5;">
+              <div><strong>Selected Payment:</strong> <span id="reviewPaymentMethod">Cash on Delivery</span></div>
+              <div id="reviewDestinationText" style="margin-top: 3px;"><strong>Destination:</strong> Enter address on left</div>
+            </div>
+
+            <!-- Explicit Place Order Action -->
+            <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;">
+              <button id="placeOrderBtn" class="btn btn-forest" style="width: 100%; height: 48px; font-size: 1.05rem;">
+                Place Order ➔
+              </button>
+              <a href="cart.html" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">
+                ← Return to Cart
+              </a>
+            </div>
+
+            <div style="margin-top: 1.25rem; font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.4;">
+              🔒 Clicking "Place Order" creates a simulated order receipt stored in your local browser history.
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <!-- Order Confirmation Screen (Shown after Place Order) -->
+      <div id="orderConfirmationSection" style="display: none;">
+        <div class="order-confirmation-box">
+          <div class="order-success-icon">✓</div>
+          <div class="editorial-tagline">ORDER CONFIRMATION</div>
+          <h1 style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--text-primary); margin-bottom: 0.5rem;">
+            Thank you for your order!
+          </h1>
+          <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">
+            Your order has been placed successfully in demonstration mode. An itemized receipt is stored in your account history.
+          </p>
+
+          <div style="display: inline-flex; align-items: center; gap: 0.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.5rem 1.25rem; border-radius: 9999px; margin-bottom: 2rem;">
+            <span style="font-size: 0.85rem; color: var(--text-muted);">Order Number:</span>
+            <strong id="confirmOrderNumber" style="font-family: monospace; font-size: 1.1rem; color: var(--accent-green);">BOK-000000</strong>
+          </div>
+
+          <!-- Order Receipt Summary -->
+          <div class="order-receipt-card">
+            <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--text-primary); margin-bottom: 0.75rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;">
+              Order Receipt Summary
+            </h4>
+
+            <ul id="confirmItemsList" style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1rem; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem;">
+              <!-- Populated via JS -->
+            </ul>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.82rem; background: var(--bg-card); padding: 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); margin-bottom: 1rem;">
+              <div>
+                <span style="color: var(--text-muted); display: block;">Recipient Contact:</span>
+                <strong id="confirmRecipientText" style="color: var(--text-primary); font-size: 0.9rem;">-</strong>
+                <div id="confirmMobileText" style="color: var(--text-secondary); margin-top: 2px;"></div>
+              </div>
+              <div>
+                <span style="color: var(--text-muted); display: block;">Delivery Destination:</span>
+                <strong id="confirmAddressText" style="color: var(--text-primary); font-size: 0.88rem;">-</strong>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 0.35rem; padding: 0.75rem 0; border-top: 1px solid var(--border-color); font-size: 0.88rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Subtotal:</span>
+                <span id="confirmSubtotal" style="font-weight: 600; color: var(--text-primary);">$0.00</span>
+              </div>
+              <div id="confirmDiscountRow" style="display: none; justify-content: space-between; color: #166534;">
+                <span>Coupon Discount (<span id="confirmDiscountPercent">15%</span>):</span>
+                <span id="confirmDiscount" style="font-weight: 600;">-$0.00</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Delivery / Shipping:</span>
+                <span id="confirmShipping" style="font-weight: 600; color: var(--accent-green);">Free</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Estimated Tax:</span>
+                <span id="confirmTax" style="font-weight: 600; color: var(--text-primary);">$0.00</span>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.75rem; border-top: 1px solid var(--border-color); font-size: 0.9rem;">
+              <div>
+                <span style="color: var(--text-muted);">Payment Method:</span>
+                <strong id="confirmPaymentMethod" style="color: var(--text-primary); margin-left: 0.25rem;">Cash on Delivery</strong>
+              </div>
+              <div>
+                <span style="color: var(--text-muted);">Total Paid (Simulated):</span>
+                <strong id="confirmGrandTotal" style="font-size: 1.25rem; color: var(--accent-green); margin-left: 0.25rem;">$0.00</strong>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="account.html" class="btn btn-forest">View in Account History</a>
+            <a href="books.html" class="btn btn-outline">Continue Exploring Books</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.4rem;">📖</span>
+              <span style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #ffffff;">BOOKORA</span>
+            </div>
+            <p>
+              Bookora is an independent online bookstore committed to literary excellence. We curate handpicked hardcover editions, thought-provoking non-fiction, and timeless stories.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">Collections</h4>
+            <ul class="footer-links-list">
+              <li><a href="books.html">Best Sellers</a></li>
+              <li><a href="books.html">New Releases</a></li>
+              <li><a href="books.html">Hardcover Editions</a></li>
+              <li><a href="books.html">Classics &amp; Fiction</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">About Bookora</h4>
+            <ul class="footer-links-list">
+              <li><a href="about.html">Our Story</a></li>
+              <li><a href="about.html">Curatorial Vision</a></li>
+              <li><a href="about.html">Location &amp; Hours</a></li>
+              <li><a href="about.html">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">Customer Care</h4>
+            <ul class="footer-links-list">
+              <li><a href="cart.html">View Cart</a></li>
+              <li><a href="account.html">My Account</a></li>
+              <li><a href="about.html">Shipping &amp; Delivery</a></li>
+              <li><a href="about.html">Returns Policy</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <p>&copy; 2026 BOOKORA Bookstore Inc. All rights reserved.</p>
+          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+            <a href="about.html">Privacy Policy</a>
+            <a href="about.html">Terms of Service</a>
+            <a href="react-demo.html" style="opacity: 0.4;">Component Demo</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="js/data.js"></script>
+    <script type="module" src="js/cart.js"></script>
+    <script type="module" src="js/account.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/checkout.js"></script>
+  </body>
+</html>

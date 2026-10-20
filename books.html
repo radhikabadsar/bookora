@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Catalogue — Bookora</title>
+    <meta name="description" content="Browse our curated collection of hardcover books, literary fiction, science, and memoirs." />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Top Announcement Bar -->
+    <div class="top-announcement">
+      Free Worldwide Delivery on Orders Over $50 &bull; Handpicked Hardcover Editions Delivered with Care
+    </div>
+
+    <!-- Site Header -->
+    <header class="site-header">
+      <div class="nav-container">
+        <a href="index.html" class="brand-logo">
+          <div class="brand-icon">📖</div>
+          <div class="brand-text-group">
+            <span class="brand-name">BOOKORA</span>
+            <span class="brand-subline">Modern Bookstore</span>
+          </div>
+        </a>
+
+        <nav>
+          <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="books.html" class="nav-link active">Books</a></li>
+            <li><a href="cart.html" class="nav-link">Cart</a></li>
+            <li><a href="account.html" class="nav-link">Account</a></li>
+            <li><a href="about.html" class="nav-link">About</a></li>
+          </ul>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="cart.html" class="cart-button-link" title="View Shopping Cart">
+            <span>🛒 Cart</span>
+            <span id="cartBadge" class="cart-counter" style="display: none;">0</span>
+          </a>
+          <a href="account.html" class="account-button-link" title="My Account">
+            <span>👤 Account</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Breadcrumb Navigation -->
+      <div class="breadcrumb-nav">
+        <a href="index.html">Home</a>
+        <span class="breadcrumb-separator">›</span>
+        <span class="breadcrumb-current">Book Catalogue</span>
+      </div>
+
+      <!-- Page Header -->
+      <div class="editorial-header">
+        <div class="editorial-tagline">CURATED SHELVES</div>
+        <h1 class="editorial-title">Browse Our Collection</h1>
+        <p class="editorial-desc">
+          Handpicked editions spanning contemporary fiction, historical perspectives, and transformative non-fiction.
+        </p>
+      </div>
+
+      <!-- Catalogue Filter Toolbar -->
+      <section class="catalogue-toolbar">
+        <div class="search-field-wrapper">
+          <span class="search-icon-svg">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            class="search-field-input"
+            placeholder="Search books by title, author, or keyword..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="category-pills">
+          <button class="category-filter-btn active" data-category="All">All Books</button>
+          <button class="category-filter-btn" data-category="Fiction">Fiction</button>
+          <button class="category-filter-btn" data-category="Non-fiction">Non-fiction</button>
+          <button class="category-filter-btn" data-category="Romance">Romance</button>
+          <button class="category-filter-btn" data-category="Mystery">Mystery</button>
+          <button class="category-filter-btn" data-category="Science">Science</button>
+          <button class="category-filter-btn" data-category="Technology">Technology</button>
+          <button class="category-filter-btn" data-category="Children's Books">Children's Books</button>
+        </div>
+
+        <div class="catalogue-status-bar">
+          <span id="resultsCount">Loading catalogue...</span>
+          <span>Verified Editions</span>
+        </div>
+      </section>
+
+      <!-- Dynamic Books Grid -->
+      <section id="booksGrid" class="books-grid">
+        <!-- Rendered dynamically by js/books.js -->
+      </section>
+
+      <!-- Customer-Friendly Open Library Discovery Section -->
+      <section class="external-discovery-section">
+        <div class="discovery-header">
+          <div class="discovery-title-group">
+            <div class="editorial-tagline">ARCHIVAL DISCOVERY</div>
+            <h3>Discover Classics from Open Library</h3>
+            <p>
+              Explore digitized public domain literature and historic editions preserved by the global Open Library archive.
+            </p>
+          </div>
+          <button id="refreshDiscoveryBtn" class="btn btn-outline btn-sm">
+            🔄 Refresh Recommendations
+          </button>
+        </div>
+
+        <div id="discoveryStatus" class="discovery-status">
+          <div class="spinner"></div>
+          <p>Connecting to Open Library archive...</p>
+        </div>
+
+        <div id="discoveryBooksGrid" class="books-grid">
+          <!-- Populated dynamically via fetch() -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Site Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-grid">
+          <div class="footer-brand-col">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="font-size: 1.4rem;">📖</span>
+              <span style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; color: #ffffff;">BOOKORA</span>
+            </div>
+            <p>
+              Bookora is an independent online bookstore committed to literary excellence. We curate handpicked hardcover editions, thought-provoking non-fiction, and timeless stories.
+            </p>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">Collections</h4>
+            <ul class="footer-links-list">
+              <li><a href="books.html">Best Sellers</a></li>
+              <li><a href="books.html">New Releases</a></li>
+              <li><a href="books.html">Hardcover Editions</a></li>
+              <li><a href="books.html">Classics &amp; Fiction</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">About Bookora</h4>
+            <ul class="footer-links-list">
+              <li><a href="about.html">Our Story</a></li>
+              <li><a href="about.html">Curatorial Vision</a></li>
+              <li><a href="about.html">Location &amp; Hours</a></li>
+              <li><a href="about.html">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 class="footer-heading">Customer Care</h4>
+            <ul class="footer-links-list">
+              <li><a href="cart.html">View Cart</a></li>
+              <li><a href="account.html">My Account</a></li>
+              <li><a href="about.html">Shipping &amp; Delivery</a></li>
+              <li><a href="about.html">Returns Policy</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom-bar">
+          <p>&copy; 2026 BOOKORA Bookstore Inc. All rights reserved.</p>
+          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap;">
+            <a href="about.html">Privacy Policy</a>
+            <a href="about.html">Terms of Service</a>
+            <a href="react-demo.html" style="opacity: 0.4;">Component Demo</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="js/data.js"></script>
+    <script type="module" src="js/cart.js"></script>
+    <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/books.js"></script>
+  </body>
+</html>
